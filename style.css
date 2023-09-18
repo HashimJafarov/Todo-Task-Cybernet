@@ -5,8 +5,37 @@
   text-decoration: none;
   list-style: none;
 }
-.todo_container {
-  width: 500px;
-  background-color: red;
+.container {
+  width: 1200px;
+  margin: 0 auto;
+}
+#todo_container {
+  position: relative;
   border-radius: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 150px;
+}
+#todo_input,
+#btn {
+  height: 35px;
+}
+#todo_input {
+  width: 50%;
+  border: 1px solid #000;
+  border-radius: 7px;
+  outline: 0;
+  padding: 0 7px;
+  font-size: 12px;
+}
+#btn {
+  width: 5%;
+  position: absolute;
+  top: 0;
+  right: 20%;
+  border-radius: 7px;
+  border: none;
+  background-color: transparent;
+  transform: translateX(-100%);
 }

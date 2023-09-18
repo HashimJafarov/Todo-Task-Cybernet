@@ -4,5 +4,6 @@ let todos = [];
 
 btn.addEventListener("click", (e) => {
   let inputValue = input.value;
-  
+  todos.push(inputValue);
+  console.log(todos);
 });
