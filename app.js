@@ -1,13 +1,17 @@
 const input = document.getElementById("todo_input");
-const btn = document.getElementById("btn");
-const result = document.getElementById("todo_result");
-const error = document.getElementById("error");
+const btn = document.querySelector(".btn");
+const result = document.querySelector(".todo_result");
+const error = document.querySelector(".error");
+const form = document.querySelector(".form");
 let allTodos = [];
 let newTodo = {
   id: 0,
   todo: "",
   completed: false,
 };
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+});
 const makeLoading = () => {
   result.textContent = "";
   const loading = document.createElement("div");
@@ -32,8 +36,7 @@ const getTodos = () => {
   fetch("https://dummyjson.com/todos?limit=3")
     .then((a) => a.json())
     .then((a) => {
-      allTodos.push(a.todos);
-      console.log(a);
+      allTodos.push(...a.todos);
       showTodo(allTodos);
       removeLoading();
     });
@@ -60,6 +63,7 @@ const showTodo = (allTodos) => {
     todoDiv.classList.add("todo_list");
     let todoList = document.createElement("p");
     let deleteButton = document.createElement("button");
+    deleteButton.classList.add("delete_btn");
     deleteButton.textContent = "Delete";
     todoList.textContent = todo.todo;
     todoLabel.append(todoList);
@@ -88,7 +92,7 @@ btn.addEventListener("click", () => {
     return;
   }
   input.style.borderColor = "#000";
-
+  error.textContent = "";
   let newTodo = {
     id: allTodos.length + 1,
     todo: input.value,
@@ -97,8 +101,8 @@ btn.addEventListener("click", () => {
   };
   addTodo(newTodo);
   input.value = "";
+  input.focus();
 });
-
 const deleteTodo = (todo, allTodos) => {
   makeLoading();
   fetch(`https://dummyjson.com/todos/${todo.id}`, {
@@ -113,7 +117,6 @@ const deleteTodo = (todo, allTodos) => {
       }
     });
 };
-
 const addTodo = (newTodo) => {
   makeLoading();
   fetch("https://dummyjson.com/todos/add", {
@@ -122,7 +125,7 @@ const addTodo = (newTodo) => {
     body: JSON.stringify(newTodo),
   })
     .then((a) => a.json())
-    .then(() => {
+    .then((a) => {
       allTodos.push(newTodo);
       showTodo(allTodos);
       removeLoading();
